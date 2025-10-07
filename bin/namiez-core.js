@@ -66,6 +66,7 @@ function showHelp() {
   console.log('  setup <path>           Set up Namiez Core in a project directory');
   console.log('  init <path>            Initialize new project with Namiez Core');
   console.log('  update <path>          Update existing Namiez Core installation');
+  console.log('  test verify [path]     Verify Namiez Core setup in test folder');
   console.log('  flow                   Start Namiez Core Flow (in Claude Code)');
   console.log('  agents                 List available agents');
   console.log('  version                Show version information');
@@ -76,6 +77,7 @@ function showHelp() {
   console.log('  namiez-core setup ./my-project');
   console.log('  namiez-core init ./new-app');
   console.log('  namiez-core update ./existing-project');
+  console.log('  namiez-core test verify ./test-project');
   console.log('');
   
   console.log('After setup, use these agents in Claude Code:');
@@ -247,6 +249,167 @@ function initProject(projectPath) {
   }
 }
 
+function verifyTestSetup(testPath) {
+  printHeader('Namiez Core Test Setup Verification');
+  
+  const path = require('path');
+  const projectPath = path.resolve(testPath);
+  
+  printInfo(`Verifying Namiez Core setup in: ${projectPath}`);
+  
+  const verificationResults = {
+    passed: 0,
+    failed: 0,
+    warnings: 0,
+    details: []
+  };
+  
+  // Helper functions
+  function checkResult(name, passed, message, details = '') {
+    if (passed) {
+      printSuccess(`✅ ${name}: ${message}`);
+      verificationResults.passed++;
+    } else {
+      printError(`❌ ${name}: ${message}`);
+      verificationResults.failed++;
+    }
+    if (details) {
+      verificationResults.details.push({ name, status: passed ? 'PASS' : 'FAIL', message, details });
+    }
+  }
+  
+  function checkWarning(name, message, details = '') {
+    printWarning(`⚠️  ${name}: ${message}`);
+    verificationResults.warnings++;
+    if (details) {
+      verificationResults.details.push({ name, status: 'WARN', message, details });
+    }
+  }
+  
+  // 1. Check if directory exists
+  if (!fs.existsSync(projectPath)) {
+    printError(`Directory does not exist: ${projectPath}`);
+    process.exit(1);
+  }
+  
+  checkResult('Directory', fs.existsSync(projectPath), 'Directory exists', projectPath);
+  
+  // 2. Check .ai directory structure
+  const aiDir = path.join(projectPath, '.ai');
+  const aiExists = fs.existsSync(aiDir);
+  checkResult('AI Directory', aiExists, '.ai directory exists', aiDir);
+  
+  if (aiExists) {
+    const requiredDirs = ['requirements', 'implementation', 'review', 'testing', 'refactor', 'coordinator', 'flows'];
+    requiredDirs.forEach(dir => {
+      const dirPath = path.join(aiDir, dir);
+      const exists = fs.existsSync(dirPath);
+      checkResult(`AI Subdirectory`, exists, `.ai/${dir} exists`, dirPath);
+    });
+    
+    // Check .ai README
+    const aiReadme = path.join(aiDir, 'README.md');
+    checkResult('AI README', fs.existsSync(aiReadme), '.ai/README.md exists');
+  }
+  
+  // 3. Check .claude/agents directory
+  const claudeAgentsDir = path.join(projectPath, '.claude/agents');
+  const claudeExists = fs.existsSync(claudeAgentsDir);
+  checkResult('Claude Agents Directory', claudeExists, '.claude/agents directory exists', claudeAgentsDir);
+  
+  if (claudeExists) {
+    // Check required agent files
+    const requiredAgents = [
+      'namiez-core-flow.md',
+      'requirements.md',
+      'coder.md',
+      'reviewer.md',
+      'tester.md',
+      'refactor.md',
+      'coordinator.md'
+    ];
+    
+    requiredAgents.forEach(agent => {
+      const agentPath = path.join(claudeAgentsDir, agent);
+      const exists = fs.existsSync(agentPath);
+      checkResult(`Agent File`, exists, `${agent} exists`, agentPath);
+    });
+  }
+  
+  // 4. Check configuration files
+  const configFiles = [
+    { name: 'AI Config', path: '.ai-config.json', required: true },
+    { name: 'Version File', path: '.ai-version', required: true },
+    { name: 'Installation Date', path: '.ai-installed', required: true },
+    { name: 'Claude Ignore', path: '.claudeignore', required: true },
+    { name: 'Project README', path: 'README.md', required: true }
+  ];
+  
+  configFiles.forEach(config => {
+    const configPath = path.join(projectPath, config.path);
+    const exists = fs.existsSync(configPath);
+    checkResult(config.name, exists, `${config.path} exists`, configPath);
+    
+    if (exists && config.path === '.ai-config.json') {
+      try {
+        const configContent = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+        checkResult('Config JSON', true, 'Valid JSON configuration');
+        const projectName = configContent.name;
+        const hasAgents = configContent.agents && typeof configContent.agents === 'object' && Object.keys(configContent.agents).length > 0;
+        checkResult('Project Name', !!projectName, `Project name configured: ${projectName}`);
+        checkResult('Agents Config', hasAgents, `Agents configuration exists (${Object.keys(configContent.agents || {}).length} agents)`);
+      } catch (error) {
+        checkResult('Config JSON', false, 'Invalid JSON in .ai-config.json');
+      }
+    }
+  });
+  
+  // 5. Check templates directory
+  const templatesDir = path.join(projectPath, '.ai-templates');
+  const templatesExist = fs.existsSync(templatesDir);
+  if (templatesExist) {
+    checkWarning('Templates', 'Templates directory exists', 'Extra .ai-templates directory found');
+  } else {
+    checkWarning('Templates', 'Templates directory missing', 'Consider adding .ai-templates directory');
+  }
+  
+  // 6. Summary
+  console.log('');
+  printHeader('Verification Summary');
+  
+  console.log(`✅ Passed: ${verificationResults.passed}`);
+  if (verificationResults.failed > 0) {
+    console.log(`❌ Failed: ${verificationResults.failed}`);
+  }
+  if (verificationResults.warnings > 0) {
+    console.log(`⚠️  Warnings: ${verificationResults.warnings}`);
+  }
+  
+  // 7. Final verdict
+  console.log('');
+  if (verificationResults.failed === 0) {
+    if (verificationResults.warnings === 0) {
+      printSuccess('🎉 Perfect! Namiez Core setup is complete and correct');
+      console.log('');
+      printInfo('Ready to use:');
+      printInfo('1. cd ' + projectPath);
+      printInfo('2. Start Claude Code');
+      printInfo('3. Type: namiez-core-flow');
+    } else {
+      printWarning('⚠️  Namiez Core setup is functional with some warnings');
+      console.log('');
+      printInfo('Setup works, but consider addressing the warnings above');
+    }
+    process.exit(0);
+  } else {
+    printError('❌ Namiez Core setup has critical issues');
+    console.log('');
+    printInfo('Please fix the failed checks above');
+    printInfo('Try running: namiez-core setup ' + projectPath);
+    process.exit(1);
+  }
+}
+
 // Main CLI logic
 function main() {
   const args = process.argv.slice(2);
@@ -285,6 +448,18 @@ function main() {
   if (command === 'update') {
     setupProject(args[1], { update: true });
     return;
+  }
+  
+  if (command === 'test') {
+    const testCommand = args[1];
+    if (testCommand === 'verify') {
+      verifyTestSetup(args[2] || '.');
+      return;
+    } else {
+      printError('Unknown test command. Available: verify');
+      printInfo('Usage: namiez-core test verify [path]');
+      process.exit(1);
+    }
   }
   
   printError(`Unknown command: ${command}`);

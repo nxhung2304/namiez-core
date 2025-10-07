@@ -1,0 +1,81 @@
+{
+  "version": "1.0.0",
+  "name": "test",
+  "description": "AI-assisted development project",
+  "flow_mode": "unified",
+  "agents": {
+    "namiez-core-flow": {
+      "enabled": true,
+      "file": ".claude/agents/namiez-core-flow.md",
+      "role": "orchestrator",
+      "manages_workflow": true
+    },
+    "requirements": {
+      "enabled": true,
+      "file": ".claude/agents/requirements.md",
+      "output_dir": ".ai/requirements",
+      "template": ".ai-templates/requirements_template.md"
+    },
+    "coder": {
+      "enabled": true,
+      "file": ".claude/agents/coder.md",
+      "output_dir": ".ai/implementation",
+      "template": ".ai-templates/implementation_template.md"
+    },
+    "reviewer": {
+      "enabled": true,
+      "file": ".claude/agents/reviewer.md",
+      "output_dir": ".ai/review",
+      "template": ".ai-templates/review_template.md"
+    },
+    "tester": {
+      "enabled": true,
+      "file": ".claude/agents/tester.md",
+      "output_dir": ".ai/testing",
+      "template": ".ai-templates/testing_template.md"
+    },
+    "refactor": {
+      "enabled": true,
+      "file": ".claude/agents/refactor.md",
+      "output_dir": ".ai/refactor",
+      "template": ".ai-templates/refactor_template.md"
+    },
+    "coordinator": {
+      "enabled": true,
+      "file": ".claude/agents/coordinator.md",
+      "output_dir": ".ai/coordinator"
+    }
+  },
+  "workflows": {
+    "standard": ["requirements", "coder", "reviewer", "tester", "refactor"],
+    "quick": ["coder", "tester"],
+    "review_only": ["reviewer"],
+    "bug_fix": ["coder", "tester"],
+    "enhancement": ["requirements", "coder", "tester"],
+    "full": ["coordinator", "requirements", "coder", "reviewer", "tester", "refactor"]
+  },
+  "flow_settings": {
+    "auto_progress": false,
+    "show_summaries": true,
+    "save_intermediate": true,
+    "allow_skipping": true,
+    "require_confirmation": true,
+    "maintain_context": true,
+    "generate_docs": true
+  },
+  "output": {
+    "flow_state_dir": ".ai/flows",
+    "status_template": ".ai-templates/flow-status.md",
+    "summary_template": ".ai-templates/flow-summary.md",
+    "auto_save": true,
+    "timestamp_format": "YYYY-MM-DD HH:mm:ss"
+  },
+  "git": {
+    "track_ai_docs": true,
+    "ignore_patterns": [
+      ".ai/flows/FLOW-STATUS-*",
+      "*.tmp",
+      "*.log"
+    ]
+  }
+}

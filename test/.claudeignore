@@ -1,0 +1,15 @@
+# AI-Core ignore patterns
+node_modules/
+.git/
+.vscode/
+.idea/
+*.log
+.DS_Store
+dist/
+build/
+coverage/
+*.tmp
+*.temp
+.ai/coordinator/TRACKING-*
+.ai/coordinator/SUMMARY-*
+.ai/flows/FLOW-STATUS-*

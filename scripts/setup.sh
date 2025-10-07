@@ -193,8 +193,13 @@ install_agents() {
     local agents=("namiez-core-flow.md" "requirements.md" "coder.md" "reviewer.md" "tester.md" "refactor.md" "coordinator.md")
     
     for agent in "${agents[@]}"; do
-        if [ -f ".claude/agents/$agent" ]; then
-            cp ".claude/agents/$agent" "$agents_dir/"
+        # Look for agent files in the agents/ directory first
+        local source_file="agents/flow.md"
+        if [ "$agent" = "namiez-core-flow.md" ] && [ -f "$source_file" ]; then
+            cp "$source_file" "$agents_dir/namiez-core-flow.md"
+            print_success "Installed agent: namiez-core-flow"
+        elif [ -f "agents/$agent" ]; then
+            cp "agents/$agent" "$agents_dir/"
             
             # Get agent name without .md extension for display
             local agent_name=$(basename "$agent" .md)
@@ -318,8 +323,33 @@ create_readme() {
     local project_root="$PROJECT_PATH"
     
     # Check if README already exists
-    if [ -f "$project_root/README.md" ] && [ "$UPDATE_MODE" = false ]; then
-        print_warning "README.md already exists. Skipping creation."
+    if [ -f "$project_root/README.md" ]; then
+        if [ "$UPDATE_MODE" = false ]; then
+            print_info "README.md already exists. Creating Namiez Core section in it."
+            # Check if it already has Namiez Core section
+            if ! grep -q "Namiez Core" "$project_root/README.md"; then
+                echo "" >> "$project_root/README.md"
+                echo "## 🤖 Namiez Core Integration" >> "$project_root/README.md"
+                echo "" >> "$project_root/README.md"
+                echo "This project uses Namiez Core for AI-assisted development." >> "$project_root/README.md"
+                echo "" >> "$project_root/README.md"
+                echo "### Available Agents" >> "$project_root/README.md"
+                echo "- \`namiez-core-flow\` - Complete workflow orchestrator" >> "$project_root/README.md"
+                echo "- \`requirements\` - Requirements analysis" >> "$project_root/README.md"
+                echo "- \`coder\` - Implementation" >> "$project_root/README.md"
+                echo "- \`reviewer\` - Code review" >> "$project_root/README.md"
+                echo "- \`tester\` - Testing" >> "$project_root/README.md"
+                echo "- \`refactor\` - Code improvement" >> "$project_root/README.md"
+                echo "- \`coordinator\` - Project overview" >> "$project_root/README.md"
+                echo "" >> "$project_root/README.md"
+                echo "Start with: \`namiez-core-flow\` in Claude Code" >> "$project_root/README.md"
+                print_success "Added Namiez Core section to existing README.md"
+            else
+                print_info "README.md already contains Namiez Core section. Skipping."
+            fi
+        else
+            print_info "Update mode: Leaving existing README.md unchanged"
+        fi
         return
     fi
     
@@ -563,11 +593,17 @@ update_installation() {
     
     # Update agents
     print_info "Updating agents..."
-    for agent_file in "$ai_core_source/.claude/agents"/*.md; do
+    for agent_file in "$ai_core_source/agents"/*.md; do
         if [ -f "$agent_file" ]; then
             local agent_name=$(basename "$agent_file")
-            cp "$agent_file" "$project_root/.claude/agents/"
-            print_success "Updated $agent_name"
+            # Handle special case for flow.md -> namiez-core-flow.md
+            if [ "$agent_name" = "flow.md" ]; then
+                cp "$agent_file" "$project_root/.claude/agents/namiez-core-flow.md"
+                print_success "Updated namiez-core-flow.md"
+            else
+                cp "$agent_file" "$project_root/.claude/agents/"
+                print_success "Updated $agent_name"
+            fi
         fi
     done
     
@@ -686,11 +722,15 @@ validate_args() {
         PROJECT_PATH="$(pwd)/$PROJECT_PATH"
     fi
     
-    # Check if project directory exists
+    # Check if project directory exists and warn if it has existing ai-core setup
     if [ "$UPDATE_MODE" = false ] && [ -d "$PROJECT_PATH" ]; then
-        print_error "Directory already exists: $PROJECT_PATH"
-        print_info "Use --update flag to update existing installation"
-        exit 1
+        if [ -f "$PROJECT_PATH/.ai-config.json" ] || [ -d "$PROJECT_PATH/.claude/agents" ]; then
+            print_warning "Directory already has Namiez Core installed: $PROJECT_PATH"
+            print_info "This will update the existing installation."
+            UPDATE_MODE=true
+        else
+            print_info "Directory exists, will add Namiez Core to it: $PROJECT_PATH"
+        fi
     fi
     
     if [ "$UPDATE_MODE" = true ] && [ ! -d "$PROJECT_PATH" ]; then
