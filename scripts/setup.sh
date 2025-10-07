@@ -12,7 +12,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Default values
-REPO_URL="https://github.com/your-username/namiez-core.git"
+REPO_URL="https://github.com/nxhung2304e/namiez-core.git"
 BRANCH="main"
 UPDATE_MODE=false
 PROJECT_PATH=""
@@ -464,7 +464,7 @@ namiez-core-flow → (choose Enhancement) → requirements → coder → tester
 - **Jump around** - go back to previous agents or skip ahead as needed
 - **Auto-documentation** - everything is documented automatically
 
-For detailed documentation, see the [AI-Core repository](https://github.com/your-username/namiez-core).
+For detailed documentation, see the [AI-Core repository](https://github.com/nxhung2304e/namiez-core).
 
 ---
 

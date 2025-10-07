@@ -90,7 +90,7 @@ function showHelp() {
   console.log('  coordinator            (Project overview)');
   console.log('');
   
-  console.log('For detailed documentation, visit: https://github.com/your-username/namiez-core');
+  console.log('For detailed documentation, visit: https://github.com/nxhung2304e/namiez-core');
 }
 
 function showAgents() {

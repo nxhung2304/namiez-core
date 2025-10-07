@@ -12,7 +12,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Default values
-REPO_URL="https://github.com/your-username/namiez-core.git"
+REPO_URL="https://github.com/nxhung2304e/namiez-core.git"
 BRANCH="main"
 PROJECT_PATH=""
 AI_CORE_VERSION="1.0.0"

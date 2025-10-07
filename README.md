@@ -20,7 +20,7 @@ namiez-core-flow
 ### Option 2: Manual Setup
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/namiez-core.git
+git clone https://github.com/nxhung2304e/namiez-core.git
 cd namiez-core
 
 # Setup in your project

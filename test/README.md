@@ -108,7 +108,7 @@ namiez-core-flow → (choose Enhancement) → requirements → coder → tester
 - **Jump around** - go back to previous agents or skip ahead as needed
 - **Auto-documentation** - everything is documented automatically
 
-For detailed documentation, see the [AI-Core repository](https://github.com/your-username/namiez-core).
+For detailed documentation, see the [AI-Core repository](https://github.com/nxhung2304e/namiez-core).
 
 ---
 
