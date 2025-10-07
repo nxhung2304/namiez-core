@@ -189,23 +189,38 @@ install_agents() {
     local project_root="$PROJECT_PATH"
     local agents_dir="$project_root/.claude/agents"
     
-    # List of agent files to copy
-    local agents=("namiez-core-flow.md" "requirements.md" "coder.md" "reviewer.md" "tester.md" "refactor.md" "coordinator.md")
+    # Determine the source directory for agents
+    # First try relative to script location (npm install)
+    local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    local source_agents_dir="$script_dir/../agents"
     
-    for agent in "${agents[@]}"; do
-        # Look for agent files in the agents/ directory first
-        local source_file="agents/flow.md"
-        if [ "$agent" = "namiez-core-flow.md" ] && [ -f "$source_file" ]; then
-            cp "$source_file" "$agents_dir/namiez-core-flow.md"
-            print_success "Installed agent: namiez-core-flow"
-        elif [ -f "agents/$agent" ]; then
-            cp "agents/$agent" "$agents_dir/"
-            
+    # If that doesn't work, try current directory (local development)
+    if [ ! -d "$source_agents_dir" ]; then
+        source_agents_dir="agents"
+    fi
+    
+    # List of agent files to copy with their source names
+    declare -A agent_mappings=(
+        ["namiez-core-flow.md"]="flow.md"
+        ["requirements.md"]="requirements.md"
+        ["coder.md"]="coder.md"
+        ["reviewer.md"]="reviewer.md"
+        ["tester.md"]="tester.md"
+        ["refactor.md"]="refactor.md"
+        ["coordinator.md"]="coordinator.md"
+    )
+    
+    for target_file in "${!agent_mappings[@]}"; do
+        local source_file="${agent_mappings[$target_file]}"
+        local source_path="$source_agents_dir/$source_file"
+        
+        if [ -f "$source_path" ]; then
+            cp "$source_path" "$agents_dir/$target_file"
             # Get agent name without .md extension for display
-            local agent_name=$(basename "$agent" .md)
+            local agent_name=$(basename "$target_file" .md)
             print_success "Installed agent: $agent_name"
         else
-            print_warning "Agent file not found: $agent"
+            print_warning "Agent file not found: $source_path"
         fi
     done
     
