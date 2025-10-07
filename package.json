@@ -1,0 +1,50 @@
+{
+  "name": "ai-core",
+  "version": "1.0.0",
+  "description": "AI agents system for automated development workflow with unified flow orchestration",
+  "main": "index.js",
+  "bin": {
+    "ai-core": "./bin/ai-core.js"
+  },
+  "scripts": {
+    "install": "node scripts/install.js",
+    "setup": "node scripts/setup.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "postinstall": "node scripts/postinstall.js"
+  },
+  "keywords": [
+    "ai",
+    "claude",
+    "development",
+    "workflow",
+    "automation",
+    "agents",
+    "code-review",
+    "testing"
+  ],
+  "author": "AI Core Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/ai-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/ai-core/issues"
+  },
+  "homepage": "https://github.com/your-username/ai-core#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "files": [
+    "bin/",
+    "scripts/",
+    "agents/",
+    "templates/",
+    ".claude/agents/",
+    "VERSION",
+    "LICENSE",
+    "README.md",
+    "QUICKSTART.md"
+  ],
+  "preferGlobal": true
+}

@@ -1,33 +1,57 @@
-# ai-core
+# AI Core
 
-AI Agent System cho Development Workflow - Tự động hóa quy trình phát triển từ requirements đến deployment.
+AI agents system for automated development workflow with unified flow orchestration.
 
 ## 🚀 Quick Start
 
-### 1. Cài đặt vào project
-
+### Option 1: Use npm (Recommended)
 ```bash
-# Clone repo này
-git clone https://github.com/your-username/ai-core.git
+# Install globally
+npm install -g ai-core
 
-# Chạy setup cho project của bạn
-cd ai-core
-bash scripts/setup.sh /path/to/your/project
+# Setup in your project
+cd your-project
+ai-core setup .
+
+# Start the flow in Claude Code
+ai-core-flow
 ```
 
-### 2. Sử dụng
-
+### Option 2: Manual Setup
 ```bash
-cd /path/to/your/project
+# Clone the repository
+git clone https://github.com/your-username/ai-core.git
+cd ai-core
 
-# Bắt đầu với requirements
-claude code --agent requirements
+# Setup in your project
+bash scripts/setup.sh /path/to/your-project
 
-# Tiếp tục với các agent khác
-claude code --agent coder
-claude code --agent reviewer
-claude code --agent tester
-claude code --agent refactor
+# Start the flow in Claude Code
+ai-core-flow
+```
+
+## 📋 Available Commands
+
+### CLI Commands
+```bash
+ai-core setup <path>      # Set up AI Core in a project
+ai-core init <path>       # Initialize new project with AI Core
+ai-core update <path>     # Update existing installation
+ai-core flow              # Show flow information
+ai-core agents            # List available agents
+ai-core version           # Show version
+ai-core help              # Show help
+```
+
+### AI Agents (Use in Claude Code)
+```bash
+ai-core-flow              # Complete workflow orchestrator
+requirements              # Requirements analysis
+coder                     # Implementation
+reviewer                  # Code review
+tester                    # Testing
+refactor                  # Code improvement
+coordinator               # Project overview
 ```
 
 ## 📋 Features
