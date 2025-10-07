@@ -1,0 +1,134 @@
+{
+  "version": "1.0.0",
+  "name": "ai-core",
+  "description": "AI agents system for automated development workflow",
+  "agents": {
+    "requirements": {
+      "enabled": true,
+      "file": "agents/requirements.md",
+      "output_dir": ".ai/requirements",
+      "template": "templates/requirements_template.md"
+    },
+    "coder": {
+      "enabled": true,
+      "file": "agents/coder.md",
+      "output_dir": ".ai/implementation",
+      "template": "templates/implementation_template.md"
+    },
+    "reviewer": {
+      "enabled": true,
+      "file": "agents/reviewer.md",
+      "output_dir": ".ai/review",
+      "template": "templates/review_template.md"
+    },
+    "tester": {
+      "enabled": true,
+      "file": "agents/tester.md",
+      "output_dir": ".ai/testing",
+      "template": "templates/testing_template.md"
+    },
+    "refactor": {
+      "enabled": true,
+      "file": "agents/refactor.md",
+      "output_dir": ".ai/refactor",
+      "template": "templates/refactor_template.md"
+    },
+    "coordinator": {
+      "enabled": true,
+      "file": "agents/coordinator.md",
+      "output_dir": ".ai/coordinator",
+      "tracking_file": "TRACKING-{issue-name}.md",
+      "summary_file": "SUMMARY-{issue-name}.md"
+    }
+  },
+  "workflow": {
+    "default": ["requirements", "coder", "reviewer", "tester", "refactor"],
+    "quick": ["coder", "reviewer", "tester"],
+    "review_only": ["reviewer"],
+    "bug_fix": ["coder", "tester"],
+    "enhancement": ["requirements", "coder", "tester"],
+    "full": ["coordinator", "requirements", "coder", "reviewer", "tester", "refactor"],
+    "refactor_only": ["refactor"]
+  },
+  "naming": {
+    "convention": "kebab-case",
+    "prefix_issue_id": false,
+    "date_format": "YYYY-MM-DD",
+    "timestamp_format": "YYYY-MM-DD HH:mm:ss"
+  },
+  "templates": {
+    "enabled": true,
+    "directory": "templates",
+    "custom_templates": {},
+    "placeholders": {
+      "feature_name": "[Feature Name]",
+      "issue_name": "[issue-name]",
+      "date": "[Date]",
+      "version": "[1.0.0]"
+    }
+  },
+  "git": {
+    "track_ai_docs": true,
+    "auto_commit": false,
+    "commit_message_template": "AI: {agent} - {issue-name}",
+    "branch_naming": "ai/{agent}/{issue-name}",
+    "ignore_patterns": [
+      "*.tmp",
+      "*.log",
+      ".ai/coordinator/TRACKING-*",
+      ".ai/coordinator/SUMMARY-*",
+      ".ai-version",
+      ".ai-installed"
+    ]
+  },
+  "notifications": {
+    "slack_webhook": "",
+    "discord_webhook": "",
+    "email": "",
+    "on_stage_complete": false,
+    "on_project_complete": true,
+    "on_error": true
+  },
+  "quality": {
+    "min_test_coverage": 80,
+    "max_complexity": 10,
+    "require_review": true,
+    "require_testing": true,
+    "auto_refactor": false
+  },
+  "output": {
+    "format": "markdown",
+    "include_timestamps": true,
+    "include_agent_signature": true,
+    "include_references": true,
+    "backup_previous": false
+  },
+  "integration": {
+    "claude_code": {
+      "enabled": true,
+      "agent_prefix": "--agent",
+      "auto_switch": false
+    },
+    "github": {
+      "enabled": false,
+      "auto_create_issues": false,
+      "auto_create_prs": false,
+      "issue_template": ".github/ISSUE_TEMPLATE/feature_request.md"
+    },
+    "jira": {
+      "enabled": false,
+      "url": "",
+      "username": "",
+      "token": "",
+      "project_key": ""
+    }
+  },
+  "advanced": {
+    "parallel_execution": false,
+    "cache_results": true,
+    "debug_mode": false,
+    "log_level": "info",
+    "max_file_size": "10MB",
+    "timeout_seconds": 300
+  }
+}
