@@ -2,7 +2,7 @@
 set -e
 
 # AI-Core Setup Script
-# This script sets up ai-core with unified flow orchestration
+# This script sets up namiez-core with unified flow orchestration
 
 # Colors for output
 RED='\033[0;31m'
@@ -12,7 +12,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Default values
-REPO_URL="https://github.com/your-username/ai-core.git"
+REPO_URL="https://github.com/your-username/namiez-core.git"
 BRANCH="main"
 UPDATE_MODE=false
 PROJECT_PATH=""
@@ -26,24 +26,24 @@ print_usage() {
     echo ""
     echo "Options:"
     echo "  -h, --help              Show this help message"
-    echo "  -r, --repo URL          Custom ai-core repository URL"
+    echo "  -r, --repo URL          Custom namiez-core repository URL"
     echo "  -b, --branch BRANCH     Specific branch to use (default: main)"
-    echo "  -u, --update            Update existing ai-core installation"
+    echo "  -u, --update            Update existing namiez-core installation"
     echo ""
     echo "Examples:"
     echo "  $0 /path/to/my-project"
-    echo "  $0 --repo https://github.com/my-org/ai-core.git /path/to/project"
+    echo "  $0 --repo https://github.com/my-org/namiez-core.git /path/to/project"
     echo ""
     echo "This script will:"
     echo "  1. Check dependencies"
-    echo "  2. Clone or update ai-core"
+    echo "  2. Clone or update namiez-core"
     echo "  3. Set up .ai directory structure"
     echo "  4. Install agents in .claude/agents/"
     echo "  5. Create configuration files"
     echo "  6. Generate README"
     echo ""
     echo "After setup, you can use agents directly:"
-    echo "  - ai-core-flow (main orchestrator)"
+    echo "  - namiez-core-flow (main orchestrator)"
     echo "  - requirements"
     echo "  - coder"
     echo "  - reviewer"
@@ -133,7 +133,7 @@ This directory contains AI-assisted development documentation and outputs.
 
 Use these agents directly in Claude Code:
 
-1. **ai-core-flow** - Main orchestrator for complete workflow
+1. **namiez-core-flow** - Main orchestrator for complete workflow
 2. **requirements** - Clarify and document requirements
 3. **coder** - Implement solutions following best practices
 4. **reviewer** - Ensure code quality and identify issues
@@ -145,7 +145,7 @@ Use these agents directly in Claude Code:
 
 ### Start Complete Workflow
 ```
-ai-core-flow
+namiez-core-flow
 ```
 
 ### Use Individual Agents
@@ -158,7 +158,7 @@ refactor              # Improve code quality
 coordinator           # Project overview
 ```
 
-### Flow Navigation (when using ai-core-flow)
+### Flow Navigation (when using namiez-core-flow)
 - `continue` or `next` - Move to next agent
 - `previous` or `back` - Go back to previous agent
 - `jump to [agent]` - Jump to specific agent
@@ -190,7 +190,7 @@ install_agents() {
     local agents_dir="$project_root/.claude/agents"
     
     # List of agent files to copy
-    local agents=("ai-core-flow.md" "requirements.md" "coder.md" "reviewer.md" "tester.md" "refactor.md" "coordinator.md")
+    local agents=("namiez-core-flow.md" "requirements.md" "coder.md" "reviewer.md" "tester.md" "refactor.md" "coordinator.md")
     
     for agent in "${agents[@]}"; do
         if [ -f ".claude/agents/$agent" ]; then
@@ -333,7 +333,7 @@ AI-assisted development project using AI-Core agents.
 ### Complete Workflow (Recommended)
 Type in Claude Code:
 \`\`\`bash
-ai-core-flow
+namiez-core-flow
 \`\`\`
 
 This will guide you through the complete development workflow from requirements to deployment-ready code.
@@ -351,7 +351,7 @@ coordinator           # Project overview
 
 ## 📋 Available Agents
 
-1. **ai-core-flow** - Main orchestrator for complete workflow
+1. **namiez-core-flow** - Main orchestrator for complete workflow
 2. **requirements** - Clarify and document requirements
 3. **coder** - Implement solutions following best practices  
 4. **reviewer** - Ensure code quality and identify issues
@@ -363,7 +363,7 @@ coordinator           # Project overview
 
 ### Start Complete Flow
 \`\`\`bash
-ai-core-flow
+namiez-core-flow
 \`\`\`
 
 ### Choose Your Project Type
@@ -414,7 +414,7 @@ AI-Core is configured via \`.ai-config.json\` in the project root.
 
 ### Bug Fix
 \`\`\`bash
-ai-core-flow → (choose Bug Fix) → coder → tester
+namiez-core-flow → (choose Bug Fix) → coder → tester
 \`\`\`
 
 ### Code Review Only
@@ -424,17 +424,17 @@ reviewer
 
 ### Enhancement
 \`\`\`bash
-ai-core-flow → (choose Enhancement) → requirements → coder → tester
+namiez-core-flow → (choose Enhancement) → requirements → coder → tester
 \`\`\`
 
 ## 💡 Tips
 
-- **Use ai-core-flow** for complete projects - it maintains context across all stages
+- **Use namiez-core-flow** for complete projects - it maintains context across all stages
 - **Stay in control** - you decide when to move to the next agent
 - **Jump around** - go back to previous agents or skip ahead as needed
 - **Auto-documentation** - everything is documented automatically
 
-For detailed documentation, see the [AI-Core repository](https://github.com/your-username/ai-core).
+For detailed documentation, see the [AI-Core repository](https://github.com/your-username/namiez-core).
 
 ---
 
@@ -455,9 +455,9 @@ create_config() {
   "description": "AI-assisted development project",
   "flow_mode": "unified",
   "agents": {
-    "ai-core-flow": {
+    "namiez-core-flow": {
       "enabled": true,
-      "file": ".claude/agents/ai-core-flow.md",
+      "file": ".claude/agents/namiez-core-flow.md",
       "role": "orchestrator",
       "manages_workflow": true
     },
@@ -614,7 +614,7 @@ install_ai_core() {
     save_version
 }
 
-# Clone ai-core repository
+# Clone namiez-core repository
 clone_ai_core() {
     print_header "Installing AI-Core"
     
@@ -730,12 +730,12 @@ main() {
     echo ""
     print_info "🚀 Quick Start:"
     print_info "1. cd $PROJECT_PATH"
-    print_info "2. Type 'ai-core-flow' in Claude Code to start the complete workflow"
+    print_info "2. Type 'namiez-core-flow' in Claude Code to start the complete workflow"
     print_info "3. Or use individual agents: requirements, coder, reviewer, tester, refactor"
     
     echo ""
     print_info "📚 Available Agents:"
-    print_info "- ai-core-flow    (Complete workflow orchestrator)"
+    print_info "- namiez-core-flow    (Complete workflow orchestrator)"
     print_info "- requirements    (Requirements analysis)"
     print_info "- coder           (Implementation)"
     print_info "- reviewer        (Code review)"

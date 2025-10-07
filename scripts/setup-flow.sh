@@ -2,7 +2,7 @@
 set -e
 
 # AI Core Flow Setup Script
-# Sets up ai-core with unified flow orchestration
+# Sets up namiez-core with unified flow orchestration
 
 # Colors for output
 RED='\033[0;31m'
@@ -12,7 +12,7 @@ BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 # Default values
-REPO_URL="https://github.com/your-username/ai-core.git"
+REPO_URL="https://github.com/your-username/namiez-core.git"
 BRANCH="main"
 PROJECT_PATH=""
 AI_CORE_VERSION="1.0.0"
@@ -25,16 +25,16 @@ print_usage() {
     echo ""
     echo "Options:"
     echo "  -h, --help              Show this help message"
-    echo "  -r, --repo URL          Custom ai-core repository URL"
+    echo "  -r, --repo URL          Custom namiez-core repository URL"
     echo "  -b, --branch BRANCH     Specific branch to use (default: main)"
     echo ""
     echo "Examples:"
     echo "  $0 /path/to/my-project"
-    echo "  $0 --repo https://github.com/my-org/ai-core.git /path/to/project"
+    echo "  $0 --repo https://github.com/my-org/namiez-core.git /path/to/project"
     echo ""
     echo "This script sets up AI Core Flow for unified agent orchestration."
     echo ""
-    echo "After setup, simply type 'ai-core-flow' in Claude Code to start!"
+    echo "After setup, simply type 'namiez-core-flow' in Claude Code to start!"
 }
 
 print_success() {
@@ -287,7 +287,7 @@ AI-assisted development with unified flow orchestration.
 
 1. **Start the flow**:
    \`\`\`bash
-   ai-core-flow
+   namiez-core-flow
    \`\`\`
 
 2. **Follow the guided workflow** through each agent
@@ -337,7 +337,7 @@ Customize your workflow in \`.ai-config.json\`:
 
 ## 🔄 Flow Commands
 
-- \`ai-core-flow\` - Start new flow
+- \`namiez-core-flow\` - Start new flow
 - \`next agent\` - Move to next stage
 - \`previous agent\` - Go back one stage
 - \`jump to [agent]\` - Jump to specific agent
@@ -499,8 +499,8 @@ create_flow_config() {
   
   "navigation": {
     "commands": {
-      "start": "ai-core-flow",
-      "resume": "ai-core-flow --resume",
+      "start": "namiez-core-flow",
+      "resume": "namiez-core-flow --resume",
       "next": "next agent",
       "previous": "previous agent",
       "jump": "jump to [agent]",
@@ -538,7 +538,7 @@ create_quick_start() {
 ### Step 1: Start Your First Flow
 Type in Claude Code:
 \`\`\`
-ai-core-flow
+namiez-core-flow
 \`\`\`
 
 ### Step 2: Choose Your Workflow
@@ -598,7 +598,7 @@ Choose option (1-4):
 
 ### Start the Flow
 \`\`\`
-ai-core-flow
+namiez-core-flow
 \`\`\`
 
 ### Choose New Feature
@@ -720,7 +720,7 @@ main() {
     echo ""
     print_info "🚀 Quick Start:"
     print_info "1. cd $PROJECT_PATH"
-    print_info "2. Type 'ai-core-flow' in Claude Code"
+    print_info "2. Type 'namiez-core-flow' in Claude Code"
     print_info "3. Follow the guided workflow"
     
     echo ""

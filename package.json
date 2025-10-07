@@ -1,10 +1,10 @@
 {
-  "name": "ai-core",
+  "name": "namiez-core",
   "version": "1.0.0",
   "description": "AI agents system for automated development workflow with unified flow orchestration",
   "main": "index.js",
   "bin": {
-    "ai-core": "./bin/ai-core.js"
+    "namiez-core": "./bin/namiez-core.js"
   },
   "scripts": {
     "install": "node scripts/install.js",
@@ -22,16 +22,16 @@
     "code-review",
     "testing"
   ],
-  "author": "AI Core Team",
+  "author": "Namiez",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/ai-core.git"
+    "url": "https://github.com/nxhung2304/namiez-core.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/ai-core/issues"
+    "url": "https://github.com/nxhung2304/namiez-core/issues"
   },
-  "homepage": "https://github.com/your-username/ai-core#readme",
+  "homepage": "https://github.com/your-username/namiez-core#readme",
   "engines": {
     "node": ">=14.0.0"
   },

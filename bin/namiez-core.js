@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 
 /**
- * AI Core CLI Tool
- * Provides command-line interface for AI Core Flow setup and management
+ * Namiez Core CLI Tool
+ * Provides command-line interface for Namiez Core Flow setup and management
  */
 
 const fs = require('fs');
@@ -51,35 +51,35 @@ function printHeader(message) {
 
 function showVersion() {
   const version = fs.readFileSync(path.join(__dirname, '../VERSION'), 'utf8').trim();
-  console.log(`AI Core v${version}`);
+  console.log(`Namiez Core v${version}`);
 }
 
 function showHelp() {
   console.log('');
-  printHeader('AI Core CLI - AI Development Workflow');
+  printHeader('Namiez Core CLI - AI Development Workflow');
   
   console.log('Usage:');
-  console.log('  ai-core <command> [options] [project-path]');
+  console.log('  namiez-core <command> [options] [project-path]');
   console.log('');
   
   console.log('Commands:');
-  console.log('  setup <path>           Set up AI Core in a project directory');
-  console.log('  init <path>            Initialize new project with AI Core');
-  console.log('  update <path>          Update existing AI Core installation');
-  console.log('  flow                   Start AI Core Flow (in Claude Code)');
+  console.log('  setup <path>           Set up Namiez Core in a project directory');
+  console.log('  init <path>            Initialize new project with Namiez Core');
+  console.log('  update <path>          Update existing Namiez Core installation');
+  console.log('  flow                   Start Namiez Core Flow (in Claude Code)');
   console.log('  agents                 List available agents');
   console.log('  version                Show version information');
   console.log('  help                   Show this help message');
   console.log('');
   
   console.log('Examples:');
-  console.log('  ai-core setup ./my-project');
-  console.log('  ai-core init ./new-app');
-  console.log('  ai-core update ./existing-project');
+  console.log('  namiez-core setup ./my-project');
+  console.log('  namiez-core init ./new-app');
+  console.log('  namiez-core update ./existing-project');
   console.log('');
   
   console.log('After setup, use these agents in Claude Code:');
-  console.log('  ai-core-flow           (Complete workflow orchestrator)');
+  console.log('  namiez-core-flow           (Complete workflow orchestrator)');
   console.log('  requirements           (Requirements analysis)');
   console.log('  coder                  (Implementation)');
   console.log('  reviewer               (Code review)');
@@ -88,17 +88,17 @@ function showHelp() {
   console.log('  coordinator            (Project overview)');
   console.log('');
   
-  console.log('For detailed documentation, visit: https://github.com/your-username/ai-core');
+  console.log('For detailed documentation, visit: https://github.com/your-username/namiez-core');
 }
 
 function showAgents() {
-  printHeader('Available AI Core Agents');
+  printHeader('Available Namiez Core Agents');
   
   const agents = [
     {
-      name: 'ai-core-flow',
+      name: 'namiez-core-flow',
       description: 'Main orchestrator for complete workflow',
-      usage: 'ai-core-flow'
+      usage: 'namiez-core-flow'
     },
     {
       name: 'requirements',
@@ -143,7 +143,7 @@ function showAgents() {
 function setupProject(projectPath, options = {}) {
   if (!projectPath) {
     printError('Project path is required');
-    console.log('Usage: ai-core setup <project-path>');
+    console.log('Usage: namiez-core setup <project-path>');
     process.exit(1);
   }
   
@@ -155,7 +155,7 @@ function setupProject(projectPath, options = {}) {
   }
   
   try {
-    printHeader('Setting up AI Core...');
+    printHeader('Setting up Namiez Core...');
     
     let command = `bash "${scriptPath}"`;
     
@@ -180,10 +180,10 @@ function checkIfInClaudeCode() {
   const inClaudeCode = claudeEnvVars.some(envVar => process.env[envVar]);
   
   if (!inClaudeCode) {
-    printWarning('AI Core Flow is designed to be used within Claude Code');
+    printWarning('Namiez Core Flow is designed to be used within Claude Code');
     printInfo('Start Claude Code in your project directory, then type:');
     console.log('');
-    console.log('   ai-core-flow');
+    console.log('   namiez-core-flow');
     console.log('');
     printInfo('Or use individual agents:');
     console.log('   requirements, coder, reviewer, tester, refactor, coordinator');
@@ -193,16 +193,16 @@ function checkIfInClaudeCode() {
 }
 
 function startFlow() {
-  printHeader('AI Core Flow');
+  printHeader('Namiez Core Flow');
   
   if (!checkIfInClaudeCode()) {
     process.exit(1);
   }
   
-  printInfo('AI Core Flow orchestrator is ready!');
+  printInfo('Namiez Core Flow orchestrator is ready!');
   printInfo('In Claude Code, simply type:');
   console.log('');
-  console.log('   ai-core-flow');
+  console.log('   namiez-core-flow');
   console.log('');
   printInfo('This will guide you through the complete development workflow.');
   printInfo('Each agent will maintain context from the previous stage.');
@@ -211,12 +211,12 @@ function startFlow() {
 function initProject(projectPath) {
   if (!projectPath) {
     printError('Project path is required');
-    console.log('Usage: ai-core init <project-path>');
+    console.log('Usage: namiez-core init <project-path>');
     process.exit(1);
   }
   
   try {
-    printHeader('Initializing new project with AI Core...');
+    printHeader('Initializing new project with Namiez Core...');
     
     // Create project directory
     if (!fs.existsSync(projectPath)) {
@@ -232,14 +232,14 @@ function initProject(projectPath) {
       printWarning('Could not initialize Git repository');
     }
     
-    // Setup AI Core
+    // Setup Namiez Core
     setupProject(projectPath);
     
     printSuccess('Project initialized successfully!');
     printInfo(`Next steps:`);
     console.log(`   1. cd ${projectPath}`);
     console.log('   2. Start Claude Code in this directory');
-    console.log('   3. Type: ai-core-flow');
+    console.log('   3. Type: namiez-core-flow');
     
   } catch (error) {
     printError(`Initialization failed: ${error.message}`);
@@ -288,7 +288,7 @@ function main() {
   }
   
   printError(`Unknown command: ${command}`);
-  printInfo('Run "ai-core help" for available commands');
+  printInfo('Run "namiez-core help" for available commands');
   process.exit(1);
 }
 
